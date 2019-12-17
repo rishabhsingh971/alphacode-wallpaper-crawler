@@ -1,5 +1,7 @@
 download() {
-    echo "\n\n-------------- Fetch '$1' and save at '$2' --------------'"
+    echo
+    echo
+    echo "-------------- Fetch '$1' and save at '$2' --------------'"
     curl -L -C - "$1" -o "$2"
 }
 
