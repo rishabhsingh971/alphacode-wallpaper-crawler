@@ -15,7 +15,7 @@ cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0
 # split extracted urls using newline as delimitor
 IFS=$'\n'
 set -f
-foo=($(<input))
+urls=($(<input))
 
 # make download directory if not exists
 mkdir -p downloads
@@ -24,7 +24,7 @@ mkdir -p downloads
 cd downloads
 
 # download each url
-for url in "${foo[@]}"; do
+for url in "${urls[@]}"; do
     curl -O $url
 done
 
