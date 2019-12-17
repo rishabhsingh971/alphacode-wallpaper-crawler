@@ -26,7 +26,7 @@ download_page() {
     echo "============ Fetch page-$page_number from '$page_url' and save at '$src_file_path' ============'"
     curl "$page_url" -o "$src_file_path"
     # extract urls from src html file
-    urls=$(cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0-9]+\/)thumb-[0-9]+-([0-9]+.jpg).*/\1\2/p')
+    urls=$(cat "$src_file_path" | sed -rn 's/.*<img.*data-src="(.*\/)thumb-[0-9]+-([0-9]+.jpg)".*/\1\2/p')
 
     # download each url
     for url in $urls; do
