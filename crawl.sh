@@ -21,8 +21,8 @@ download_dir_path='downloads'
 # make download directory if not exists
 mkdir -p "$download_dir_path"
 
-page_url="https://wall.alphacoders.com/search.php?search=$search_string"
 current_page=1
+page_url="https://wall.alphacoders.com/search.php?search=$search_string&page=$current_page"
 
 # set internal field separator as newline
 old_ifs="$IFS"
