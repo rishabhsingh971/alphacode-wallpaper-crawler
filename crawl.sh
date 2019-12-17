@@ -17,16 +17,14 @@ src_file_path="$download_dir_path/src.html"
 # download source html
 download "https://wall.alphacoders.com/search.php?search=Dark+Knight" "$src_file_path"
 
-# extract image urls from html and save them in a file
-cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0-9]+\/)thumb-[0-9]+-([0-9]+.jpg).*/\1\2/p' >input
-
-# split extracted urls using newline as delimitor
+# set internal field separator as newline
 IFS=$'\n'
 set -f
-urls=($(<input))
+# extract urls from src html file
+urls=$(cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0-9]+\/)thumb-[0-9]+-([0-9]+.jpg).*/\1\2/p')
 
 # download each url
-for url in "${urls[@]}"; do
+echo $urls | while read url; do
     file_path="$download_dir_path/${url##*/}"
     download "$url" "$file_path"
 done
