@@ -23,13 +23,8 @@ download_dir_path='downloads'
 # make download directory if not exists
 mkdir -p "$download_dir_path"
 
-# switch to download directory coz curl downloads in current directory
-cd "$download_dir_path"
-
 # download each url
 for url in "${urls[@]}"; do
-    curl -O $url
+    file_path="$download_dir_path/${url##*/}"
+    curl $url -o "$file_path"
 done
-
-# go back to previous directory
-cd -
