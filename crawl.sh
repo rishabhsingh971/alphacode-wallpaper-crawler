@@ -1,3 +1,12 @@
+# check arguments
+if [ -z "$1" ]; then
+    echo "Please provide search string"
+    return 1
+fi
+
+# search string
+search_string=$1
+
 download() {
     echo
     echo
@@ -12,10 +21,10 @@ download_dir_path='downloads'
 mkdir -p "$download_dir_path"
 
 # source html file path
-src_file_path="$download_dir_path/src.html"
+src_file_path="$download_dir_path/$search_string.html"
 
 # download source html
-download "https://wall.alphacoders.com/search.php?search=Dark+Knight" "$src_file_path"
+download "https://wall.alphacoders.com/search.php?search=$search_string" "$src_file_path"
 
 # set internal field separator as newline
 IFS=$'\n'
