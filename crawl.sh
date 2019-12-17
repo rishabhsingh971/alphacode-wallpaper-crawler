@@ -25,8 +25,8 @@ page_url="https://wall.alphacoders.com/search.php?search=$search_string"
 current_page=1
 
 # set internal field separator as newline
+old_ifs="$IFS"
 IFS=$'\n'
-set -f
 
 while [ ! -z "$page_url" ]; do
     # current page html file path
@@ -44,3 +44,6 @@ while [ ! -z "$page_url" ]; do
     current_page=$((current_page + 1))
     page_url=$(cat "$src_file_path" | sed -rn 's/.*link rel="next" href="(.*&)amp;(page=[0-9]+)".*/\1\2/p')
 done
+
+# reset internal field separator
+IFS="$old_ifs"
