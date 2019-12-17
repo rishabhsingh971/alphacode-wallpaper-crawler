@@ -28,5 +28,5 @@ urls=($(<input))
 # download each url
 for url in "${urls[@]}"; do
     file_path="$download_dir_path/${url##*/}"
-    download $url "$file_path"
+    download "$url" "$file_path"
 done
