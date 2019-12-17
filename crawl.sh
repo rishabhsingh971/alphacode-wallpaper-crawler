@@ -1,6 +1,6 @@
 download() {
     echo "\n\n-------------- Fetch '$1' and save at '$2' --------------'"
-    curl -L -C "$1" -o "$2"
+    curl -L -C - "$1" -o "$2"
 }
 
 # download directory path
