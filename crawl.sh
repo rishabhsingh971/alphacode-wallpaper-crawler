@@ -7,6 +7,7 @@ fi
 # search string
 search_string=$1
 
+# function to download files using curl with resume support
 download() {
     echo
     echo
