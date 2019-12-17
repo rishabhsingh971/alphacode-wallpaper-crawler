@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # check arguments
 if [ -z "$1" ]; then
     echo "Please provide search string"
@@ -14,13 +15,17 @@ download_dir_path='downloads'
 # make download directory if not exists
 mkdir -p "$download_dir_path"
 
+# download page with given page number
 download_page() {
     # page number
     page_number=$1
+
     # page url
     page_url="https://wall.alphacoders.com/search.php?search=$search_string&page=$page_number"
+
     # page html file path
     src_file_path="$download_dir_path/$search_string.$page_number.html"
+
     # download page html
     echo
     echo "============ Fetch page-$page_number from '$page_url' and save at '$src_file_path' ============'"
@@ -38,11 +43,19 @@ download_page() {
     done
 }
 
+# start page number
 start_page_number=1
+
+# source html file path to be set by `download_page` function
 src_file_path=''
+
+# call download page function to download start page
 download_page "$start_page_number"
+
+# extract last page number
 last_page_number=$(cat "$src_file_path" | sed -rn 's/.*<a title="Last Page \(([0-9]+)\).*/\1/p')
 
+# download remaining next pages
 for ((i = $start_page_number + 1; i < $last_page_number; ++i)); do
     download_page "$i"
 done
