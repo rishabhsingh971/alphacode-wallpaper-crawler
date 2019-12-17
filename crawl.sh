@@ -17,11 +17,14 @@ IFS=$'\n'
 set -f
 urls=($(<input))
 
+# download directory path
+download_dir_path='downloads'
+
 # make download directory if not exists
-mkdir -p downloads
+mkdir -p "$download_dir_path"
 
 # switch to download directory coz curl downloads in current directory
-cd downloads
+cd "$download_dir_path"
 
 # download each url
 for url in "${urls[@]}"; do
