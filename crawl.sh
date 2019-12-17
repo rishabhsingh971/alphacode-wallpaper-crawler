@@ -1,10 +1,6 @@
 download() {
-    # check if file already exists
-    if [ -f "$2" ]; then
-        echo "\n\n-------------- Skip '$1', '$2' already exists --------------'"
-    else
-        echo "\n\n-------------- Fetch '$1' and save at '$2' --------------'"
-    fi
+    echo "\n\n-------------- Fetch '$1' and save at '$2' --------------'"
+    curl -L -C "$1" -o "$2"
 }
 
 # download directory path
