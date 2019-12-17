@@ -8,14 +8,6 @@ fi
 # search string
 search_string=$1
 
-# function to download files using curl with resume support
-download() {
-    echo
-    echo
-    echo "-------------- Fetch '$1' and save at '$2' --------------'"
-    curl -L -C - "$1" -o "$2"
-}
-
 # download directory path
 download_dir_path='downloads'
 
@@ -30,14 +22,19 @@ download_page() {
     # page html file path
     src_file_path="$download_dir_path/$search_string.$page_number.html"
     # download page html
-    download "$page_url" "$src_file_path"
+    echo
+    echo "============ Fetch page-$page_number from '$page_url' and save at '$src_file_path' ============'"
+    curl "$page_url" -o "$src_file_path"
     # extract urls from src html file
     urls=$(cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0-9]+\/)thumb-[0-9]+-([0-9]+.jpg).*/\1\2/p')
 
     # download each url
     for url in $urls; do
         file_path="$download_dir_path/${url##*/}"
-        download "$url" "$file_path"
+        # download image file with resume support
+        echo
+        echo "---------- Download image of page $page_number from '$url' and save at '$file_path' ----------'"
+        curl -L -C - "$url" -o "$file_path"
     done
 }
 
