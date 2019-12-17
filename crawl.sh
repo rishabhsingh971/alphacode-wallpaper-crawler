@@ -8,8 +8,14 @@ download() {
     fi
 }
 
+# download directory path
+download_dir_path='downloads'
+
+# make download directory if not exists
+mkdir -p "$download_dir_path"
+
 # source html file path
-src_file_path='src.html'
+src_file_path="$download_dir_path/src.html"
 
 # download source html
 download "https://wall.alphacoders.com/search.php?search=Dark+Knight" "$src_file_path"
@@ -21,12 +27,6 @@ cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0
 IFS=$'\n'
 set -f
 urls=($(<input))
-
-# download directory path
-download_dir_path='downloads'
-
-# make download directory if not exists
-mkdir -p "$download_dir_path"
 
 # download each url
 for url in "${urls[@]}"; do
