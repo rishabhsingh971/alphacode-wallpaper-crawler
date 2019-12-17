@@ -1,13 +1,18 @@
+download() {
+    # check if file already exists
+    if [ -f "$2" ]; then
+        echo "$2 already exists"
+    else
+        echo "Fetch $1 and save at $2"
+        curl "$1" -o "$2"
+    fi
+}
+
 # source html file path
 src_file_path='src.html'
 
-# check if source file exists or not
-if [ -f "$src_file_path" ]; then
-    echo "$src_file_path exists"
-else
-    echo "Fetch $src_file_path"
-    curl "https://wall.alphacoders.com/search.php?search=Dark+Knight" -o "$src_file_path"
-fi
+# download source html
+download "https://wall.alphacoders.com/search.php?search=Dark+Knight" "$src_file_path"
 
 # extract image urls from html and save them in a file
 cat "$src_file_path" | sed -rn 's/.*(https:\/\/images[0-9]+\.alphacoders.com\/[0-9]+\/)thumb-[0-9]+-([0-9]+.jpg).*/\1\2/p' >input
@@ -26,5 +31,5 @@ mkdir -p "$download_dir_path"
 # download each url
 for url in "${urls[@]}"; do
     file_path="$download_dir_path/${url##*/}"
-    curl $url -o "$file_path"
+    download $url "$file_path"
 done
